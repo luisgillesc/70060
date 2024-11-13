@@ -1,6 +1,5 @@
-// frontend/src/components/MockingUsers.js
+// frontend/src/components/MockingUsers.jsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 const MockingUsers = () => {
   const [users, setUsers] = useState([]);
@@ -8,8 +7,10 @@ const MockingUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('/api/mocks/mockingusers');
-        setUsers(response.data);
+        const response = await fetch('/api/mocks/mockingusers');
+        if (!response.ok) throw new Error("Network response was not ok");
+        const data = await response.json();
+        setUsers(data);
       } catch (error) {
         console.error("Error fetching mocking users:", error);
       }

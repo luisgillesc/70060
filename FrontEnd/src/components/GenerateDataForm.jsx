@@ -1,6 +1,5 @@
-// frontend/src/components/GenerateDataForm.js
+// frontend/src/components/GenerateDataForm.jsx
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const GenerateDataForm = () => {
   const [userCount, setUserCount] = useState(0);
@@ -9,11 +8,17 @@ const GenerateDataForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('/api/mocks/generateData', {
-        users: Number(userCount),
-        pets: Number(petCount),
+      const response = await fetch('/api/mocks/generateData', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          users: Number(userCount),
+          pets: Number(petCount),
+        }),
       });
-      alert(response.data.message || 'Data generated successfully');
+      if (!response.ok) throw new Error("Network response was not ok");
+      const data = await response.json();
+      alert(data.message || 'Data generated successfully');
     } catch (error) {
       console.error("Error generating data:", error);
       alert('Failed to generate data');

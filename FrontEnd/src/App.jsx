@@ -1,8 +1,8 @@
 // frontend/src/App.jsx
 import React from 'react';
-import MockingUsers from './components/MockingUsers.js';
-import MockingPets from './components/MockingPets.js';
-import GenerateDataForm from './components/GenerateDataForm.js';
+import MockingUsers from './components/MockingUsers.jsx';
+import MockingPets from './components/MockingPets.jsx';
+import GenerateDataForm from './components/GenerateDataForm.jsx';
 
 const App = () => {
   return (

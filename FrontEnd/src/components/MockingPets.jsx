@@ -1,6 +1,5 @@
-// frontend/src/components/MockingPets.js
+// frontend/src/components/MockingPets.jsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 const MockingPets = () => {
   const [pets, setPets] = useState([]);
@@ -8,8 +7,10 @@ const MockingPets = () => {
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const response = await axios.get('/api/mocks/mockingpets');
-        setPets(response.data);
+        const response = await fetch('/api/mocks/mockingpets');
+        if (!response.ok) throw new Error("Network response was not ok");
+        const data = await response.json();
+        setPets(data);
       } catch (error) {
         console.error("Error fetching mocking pets:", error);
       }

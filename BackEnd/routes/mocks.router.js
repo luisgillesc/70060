@@ -30,11 +30,13 @@ router.get('/mockingusers', async (req, res) => {
 router.post('/generateData', async (req, res) => {
   const { users, pets } = req.body;
 
+  // Validación de datos
   if (!Number.isInteger(users) || !Number.isInteger(pets)) {
     return res.status(400).json({ message: 'Invalid input' });
   }
 
   try {
+    // Generar usuarios
     const generatedUsers = Array.from({ length: users }, (_, i) => ({
       username: `generated_user${i + 1}`,
       password: bcrypt.hashSync('coder123', 10),
@@ -44,6 +46,7 @@ router.post('/generateData', async (req, res) => {
 
     await User.insertMany(generatedUsers);
 
+    // Generar mascotas
     const generatedPets = Array.from({ length: pets }, (_, i) => ({
       name: `Pet${i + 1}`,
       type: 'dog',
@@ -53,8 +56,10 @@ router.post('/generateData', async (req, res) => {
 
     res.json({ message: 'Data generated successfully' });
   } catch (error) {
+    console.error("Error in generateData:", error); // Mostrar el error completo en la consola
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 export default router;
